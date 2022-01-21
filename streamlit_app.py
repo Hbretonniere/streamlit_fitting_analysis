@@ -5,14 +5,12 @@ from app.help import readme
 from app.params import (
     single_sersic_params,
     double_sersic_params,
-    double_sersic_free_params,
     realistic_params,
-    multiband_params,
     LABELS,
 )
 from app.summary import summary, summary2D, trumpet, score, error_calibration
 
-DATASETS = ("single_sersic", "double_sersic", "realistic", "multiband")
+DATASETS = ("single_sersic", "double_sersic", "realistic")
 PARAMETERS_2D = ["re", "q"]
 
 
@@ -29,13 +27,12 @@ def main():
 
     Launch the web page with the interface
     """
-    nb_free = False
     band = None
 
     description = st.expander("README")
     description.markdown(readme)
 
-    st.title("MorphoChallenge DIY plots")
+    st.title("Interactive Plots of galaxy Fitting codes")
     demo = st.checkbox(
         "Demo version (much faster). Uncheck when all set to get the full results.",
         value=True,
@@ -53,17 +50,8 @@ def main():
         dataset_params = realistic_params
     elif dataset == "double_sersic":
         dataset_params = double_sersic_params
-        nb_free = st.sidebar.checkbox("Use free bulge Sersic fit")
-    elif dataset == "multiband":
-        band = st.sidebar.radio("Which fitted band ?", ["VIS", "NIR-y"])
-        dataset_params = multiband_params
-        if band == "NIR-y" and "SE++" in dataset_params["available_codes"]:
-            dataset_params["available_codes"].remove("SE++")
 
-    if nb_free:
-        dataset_params = double_sersic_free_params
-
-    df = load_data(dataset, nb_free=nb_free, band=band, demo=demo)
+    df = load_data(dataset, nb_free=False, band=band, demo=demo)
 
     plot_type = st.sidebar.radio("Select a Type of plot", dataset_params["plot_types"])
 
@@ -220,14 +208,13 @@ def main():
             n_bins,
             outliers,
             x_axis,
-            abs=False,
-            show_scores=show_scores
+            abs=False
         )
     elif plot_type == "Error Prediction":
         results = error_calibration(df, dataset, params, codes, xs, n_bins)
 
     if st.button("Save results", disabled="Summary" not in plot_type):
-        filepath = save_results(results, dataset, nb_free)
+        filepath = save_results(results, dataset, False)
         st.success(f"Results saved as {filepath}")
 
 

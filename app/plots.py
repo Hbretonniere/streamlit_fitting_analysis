@@ -29,7 +29,8 @@ def trumpet_plot(
 ):
 
     """
-    Compute and create the Scatter plot figure for the Bias of a galaxy parameter regarding its magnitude,
+    Adapted from a code of Ulrike Kuchner
+    Compute and create the Scatter plot figure for the Bias of a software3xy parameter regarding its magnitude,
     for different codes.
     In the plot, the running mean and std of each bin of magnitude is plotted in solid orange.
     Markers transparency are proportional to the density of points.
@@ -116,11 +117,11 @@ def trumpet_plot(
     mode = chose_mode(param)
 
     cmaps = {
-        "SE++": plt.cm.Greys,
-        "metryka": plt.cm.Reds,
-        "profit": plt.cm.Blues,
-        "gala": plt.cm.Greens,
-        "deepleg": plt.cm.Purples,
+        "software1": plt.cm.Greys,
+        "software2": plt.cm.Reds,
+        "software3": plt.cm.Blues,
+        "software4": plt.cm.Greens,
+        "software5": plt.cm.Purples,
     }
     for i, code in enumerate(codes):
         cmaps[code] = LinearSegmentedColormap.from_list(
@@ -326,7 +327,7 @@ def plot_error_prediction(dataset, calib_mag, params, codes, x_bins, labels):
 
     calib_mag : dictionary of dictionaries
         Dictionary containing for each param the score of the different codes.
-        e.g. calib_mag['re']['profit'] = value
+        e.g. calib_mag['re']['software2'] = value
 
     params : list of string
         The list of parameters name you want to plot. It needs to be one key of the dictionnary.
@@ -348,11 +349,11 @@ def plot_error_prediction(dataset, calib_mag, params, codes, x_bins, labels):
     """
 
     colors = {
-        "SE++": "black",
-        "gala": "#2F964D",
-        "profit": "#2D7DBB",
-        "metryka": "#D92523",
-        "deepleg": "#7262AC",
+        "software1": "black",
+        "software3": "#2F964D",
+        "software2": "#2D7DBB",
+        "software4": "#D92523",
+        "software4": "#7262AC",
     }
 
     if dataset in ["single_sersic", "realistic"]:
@@ -381,7 +382,7 @@ def plot_error_prediction(dataset, calib_mag, params, codes, x_bins, labels):
     for i, param in enumerate(params):
         j = 0
         for code in codes:
-            if code == "deepleg":
+            if code == "software4":
                 continue
             ax[i].bar(
                 bins + pad[j],
@@ -425,17 +426,17 @@ def plot_score(scores, labels):
 
     """
 
-    sizes = {"SE++": 100, "profit": 150, "metryka": 100, "deepleg": 150, "gala": 100}
+    sizes = {"software1": 100, "software2": 150, "software3": 100, "software4": 150, "software5": 100}
 
     colors = {
-        "SE++": "black",
-        "gala": "#2F964D",
-        "profit": "#2D7DBB",
-        "metryka": "#D92523",
-        "deepleg": "#7262AC",
+        "software1": "black",
+        "software2": "#2F964D",
+        "software3": "#2D7DBB",
+        "software4": "#D92523",
+        "software5": "#7262AC",
     }
 
-    symbols = {"SE++": "o", "gala": "s", "profit": "*", "metryka": "D", "deepleg": "X"}
+    symbols = {"software1": "o", "software2": "s", "software3": "*", "software4": "D", "software5": "X"}
 
     fig, ax = plt.subplots(figsize=(12, 8))
     codes = scores.columns
@@ -475,7 +476,7 @@ def summary_plot(
     ----------
     summary : List of dictionaries, of length 3
         The three metrics for each code and parameter, summary = [bias, dispersion, outlier_fraction]
-        Each metric is a dictionary of dictionaries, e.g summary[0]['profit']['re'] = value
+        Each metric is a dictionary of dictionaries, e.g summary[0]['software2']['re'] = value
         The codes and parameters to plot will be automatically the one present in the dictionaries
 
     mag_bins : numpy array
@@ -505,14 +506,14 @@ def summary_plot(
     """
 
     colors = {
-        "SE++": "black",
-        "gala": "#2F964D",
-        "profit": "#2D7DBB",
-        "metryka": "#D92523",
-        "deepleg": "#7262AC",
+        "software1": "black",
+        "software3": "#2F964D",
+        "software2": "#2D7DBB",
+        "software4": "#D92523",
+        "software5": "#7262AC",
     }
 
-    symbols = {"SE++": "o", "gala": "s", "profit": "*", "metryka": "D", "deepleg": "X"}
+    symbols = {"software1": "o", "software3": "s", "software2": "*", "software4": "D", "software5": "X"}
 
     mp_param.update({"font.size": 18})
     plt.rcParams["xtick.direction"] = "in"
@@ -815,7 +816,7 @@ def summary_plot2D(codes, param, summary2D, mag_bins, bt_bins, labels):
         nb_bins_mag = np.shape(summary2D[0][param][code])[2]
         x, y = np.meshgrid(np.arange(nb_bins_bt) + 0.5, np.arange(nb_bins_mag) + 0.5)
 
-        if (code in ["gala", "profit"]) & (param == "re"):
+        if (code in ["software3", "software2"]) & (param == "re"):
             bulges = ax[i, 0].pcolormesh(
                 summary2D[0][param][code][0],
                 edgecolors="w",

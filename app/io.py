@@ -57,17 +57,15 @@ def load_data(dataset, band=None, nb_free=False, demo=False):
 
     nb_free_prefix = "nb_free_" if nb_free else ""
     band = "" if band is None else f"_{band}"
-    filename = f"data/challenge_5sig_overlap_{nb_free_prefix}{dataset}{band}.fits"
-
+    filename = f"data/{nb_free_prefix}{dataset}{band}.fits"
     cat = read_catalogue(filename)
 
     if dataset == "realistic":
         cat["Truere"] /= np.sqrt(cat["Trueq"])
 
     if demo:
-        # Use only 1% of the full catalogue
-        return cat[::100]
-
+        # Use only 10% of the full catalogue
+        return cat[::10]
     return cat
 
 
@@ -99,7 +97,7 @@ def save_results(results, dataset, nb_free):
     """
 
     os.makedirs(RESULTS_DIR, exist_ok=True)
-    filename = f"MorphoChallenge_results_{dataset}_overlap_True_nbfree_{nb_free}.pickle"
+    filename = f"results_{dataset}_overlap_True_nbfree_{nb_free}.pickle"
     filepath = os.path.join(RESULTS_DIR, filename)
     with open(filepath, "wb") as handle:
         pickle.dump(results, handle, protocol=pickle.HIGHEST_PROTOCOL)

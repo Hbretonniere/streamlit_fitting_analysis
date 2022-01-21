@@ -110,8 +110,8 @@ def compute_error_bin(cat, code, param, mode="absolute", abs=True):
     param_pred = cat[pred]
     param_true = cat[true]
 
-    if (code == "profit") & (param == "BulgeSersic"):
-        print("change log n sersic bulge profit")
+    if (code == "software3") & (param == "BulgeSersic"):
+        print("change log n sersic bulge software3")
         param_pred = np.power(10, param_pred)
 
     error = param_pred - param_true
@@ -160,13 +160,13 @@ def compute_summary(
     Parameters
     ----------
     cat :
-        The catalogue containing all the galaxies of all the codes
+        The catalogue containing all the software2xies of all the codes
     params : list of string.
         The names of the parameters you want to study.
         Should match the names of the homogenized catalogues.
     codes : list of strings
         The different codes you want to study.
-        Should be one of the following : sex+, profit, gala, deepleg, metryka.
+        Should be one of the following : sex+, software3, software2, software4, metryka.
     x_bins : list of float
         The list of bins of the x-axis (magnitude or b/t) for the study. Stop at x_bins[-1].
     outlier_limit : float. The value of the outlier threshold. Objects which have an error bigger than this number
@@ -178,8 +178,8 @@ def compute_summary(
     code_means : dict
         The different means errors. There is a key by parameter name,
         and a key by code. in each, the list of mean error by bins of magnitude.
-        For example, code_means['gala']['re'] will give you the list of mean errors by bin of magnitude
-        made by galapagos on the fitting of the radius.
+        For example, code_means['software2']['re'] will give you the list of mean errors by bin of magnitude
+        made by software2pagos on the fitting of the radius.
     code_stds : dict
         Same but for stds.
     code_outs : dict
@@ -187,7 +187,7 @@ def compute_summary(
 
     Example
     -------
-    >>>  compute_summary(cat, ['mag', 're', 'q'], ['gala', 'profit'], np.linspace(18, 25, 2), outlier_limit=0.5, dataset='single_sersic')
+    >>>  compute_summary(cat, ['mag', 're', 'q'], ['software2', 'software3'], np.linspace(18, 25, 2), outlier_limit=0.5, dataset='single_sersic')
     """
 
     # Initialize the outputs
@@ -200,15 +200,15 @@ def compute_summary(
     )
     completenesses = {
         "single_sersic": {
-            "SE++": 0.93,
-            "gala": 0.87,
-            "profit": 0.98,
-            "deepleg": 0.96,
-            "metryka": 0.81,
+            "software1": 0.95,
+            "software2": 0.9,
+            "software3": 0.98,
+            "software4": 0.91,
+            "software5": 0.89,
         },
-        "double_sersic": {"SE++": 0.95, "gala": 0.93, "profit": 0.98, "deepleg": 0.95},
-        "multiband": {"SE++": 0.95, "gala": 0.93, "profit": 0.98, "deepleg": 0.95},
-        "realistic": {"SE++": 0.85, "gala": 0.71, "profit": 0.92},
+        "double_sersic": {"software1": 0.95, "software2": 0.93, "software3": 0.98, "software4": 0.95},
+        "multiband": {"software1": 0.95, "software2": 0.93, "software3": 0.98, "software4": 0.95},
+        "realistic": {"software1": 0.85, "software2": 0.71, "software3": 0.92},
     }
 
     #  Loop through the parameters you want to study
@@ -250,8 +250,8 @@ def compute_summary(
                     error = compute_error_bin(cat_bin, code, param, mode=mode, abs=abs)
                     if len(error) == 0:
                         raise RuntimeError(
-                            f"No galaxy in the bin of magnitude {x_bins[i]-x_bins[i+1]:.2f}, try reducing the magnitude range."
-                        )  # assert len(error) != 0, f'No galaxy in the bin of magnitude {x_bins[i]-x_bins[i+1]:.2f}, try reducing the magnitude range.'
+                            f"No software2xy in the bin of magnitude {x_bins[i]-x_bins[i+1]:.2f}, try reducing the magnitude range."
+                        )  # assert len(error) != 0, f'No software2xy in the bin of magnitude {x_bins[i]-x_bins[i+1]:.2f}, try reducing the magnitude range.'
                     outliers = find_outliers(
                         cat_bin, code, param, mode, outlier_limit, abs=abs
                     )
@@ -383,13 +383,13 @@ def compute_summary2D(
     Compute the Means, the Standard Deviation and the fraction of outliers of errors in the fitting of different parameters, for different codes.
 
     Inputs:
-            - cat : the catalogue containing all the galaxies of all the codes
+            - cat : the catalogue containing all the software2xies of all the codes
 
             - params : list of strings. The names of the parameters you want to study.
                                         Should match the names of the homogenized catalogues.
 
             - codes : list of strings. The different codes you want to study.
-                                        should be one of the following : sex+, profit, gala, deepleg, metryka.
+                                        should be one of the following : sex+, software3, software2, software4, metryka.
 
             - x_bins : list of float. The list of bins of the x-axis (magnitude or b/t) for the study. Stop at x_bins[-1].
 
@@ -401,8 +401,8 @@ def compute_summary2D(
     Outputs :
             - code_means : dictionnary. The different means errors. There is a key by parameter name,
                                         and a key by code. in each, the list of mean error by bins of magntiude.
-                                        For example, code_means['gala']['re'] will give you the list of mean errors by bin of magnitude
-                                        made by galapagos on the fitting of the radius.
+                                        For example, code_means['software2']['re'] will give you the list of mean errors by bin of magnitude
+                                        made by software2pagos on the fitting of the radius.
 
             - code_stds : dictionnary. Same but for stds.
 
@@ -410,7 +410,7 @@ def compute_summary2D(
 
     Example of use :
 
-          compute_summary(cat, ['mag', 're', 'q'], ['gala', 'profit'], np.linspace(18, 25, 2), outlier_limit=0.5, dataset='single_sersic')
+          compute_summary(cat, ['mag', 're', 'q'], ['software2', 'software3'], np.linspace(18, 25, 2), outlier_limit=0.5, dataset='single_sersic')
     """
 
     # Initialize the outputs

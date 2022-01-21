@@ -1,9 +1,8 @@
 import streamlit as st
 
 readme = """
-### Welcome the Euclid MorphoChallenge Do It Yourself Plotting plateform !
-
-The goal of this platform is to enable the scientists to navigate through the results of the MorphoChallenge with a control on the different parameters to maximise the feedback.
+###
+The goal of this platform is to enable the scientists to navigate through a randomly generated catalogue of galaxy fitting.
 
 On the leftmost panel, you can select the different things you want to plot:
 - the **dataset** you want to inspect: Single or double Sérsic mono band simulation, realistic morphologies (simulated with deep learning), or multiband data.  
