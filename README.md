@@ -2,22 +2,22 @@
 
 Here is a project which present interactive plots of galaxy fitting !
 The dataset are random and not scientific, it is just a proof concept of the tool. 
-You can explore the dataset with a lot of plots with customizing parameters, with different imaginary fitting softwares, 
+You can explore the dataset with a lot of plots with customizing parameters and different imaginary fitting softwares.
 
 ---------------------------------
 
+## Directly Use the App
+Click [here](https://duckduckgo.com).
+
 ## Installation
+If you want to explore more manually the code and launch your changes, follow the next steps:
+
 In addition to standard libraries such as numpy or matplotlib, you will need streamlit >= v1.x:
 
 ```bash
 pip install streamlit
 ```
----------------------------------
-## Data
-```bash
-cd data
-Download with zenodo (# TO DO)
-```
+
 ---------------------------------
 ## Run the App
 ```bash
